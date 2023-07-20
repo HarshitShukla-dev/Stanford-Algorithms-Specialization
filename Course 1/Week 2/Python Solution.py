@@ -6,7 +6,7 @@ def count_inversions(array):
     left_inversions = count_inversions(array[:len(array) // 2])
     right_inversions = count_inversions(array[len(array) // 2:])
     inversions = 0
-    with open('intArray.txt', 'r+') as f:
+    with open('intArray.txt', 'w+') as f:
       for i in range(len(array) // 2):
         for j in range(len(array) // 2, len(array)):
           if int(f.readline()) > int(f.readline()):
@@ -14,4 +14,4 @@ def count_inversions(array):
     return left_inversions + right_inversions + inversions
 
 if __name__ == '__main__':
-  print(count_inversions([int(line.strip()) for line in open('intArray.txt', 'r')]))
+  print(count_inversions([int(line.strip()) for line in open('intArray.txt', 'w+')]))
