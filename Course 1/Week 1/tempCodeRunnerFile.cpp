@@ -53,7 +53,7 @@ string karatsubaMultiply(const string& num1, const string& num2) {
     // Recursive calls for subproblems
     string ac = karatsubaMultiply(a, c);
     string bd = karatsubaMultiply(b, d);
-    string ad_bc = multiply(karatsubaMultiply(a, d), karatsubaMultiply(b, c));
+    string ad_bc = karatsubaMultiply(a, d) + karatsubaMultiply(b, c);
 
     // Combine the results using the Karatsuba algorithm formula
     string result = multiply(ac + string(2 * half_len, '0'), "1") +
