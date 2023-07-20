@@ -166,3 +166,5 @@ if __name__ == '__main__':
     print(f"First Element Pivot Comparisons: {sorters[0].comparisons}")
     print(f"Last Element Pivot Comparisons: {sorters[1].comparisons}")
     print(f"Median Element Pivot Comparisons: {sorters[2].comparisons}")
+
+# Output 162085 164123 138382
