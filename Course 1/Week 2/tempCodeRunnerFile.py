@@ -12,7 +12,7 @@ def count_inversions(array):
           if int(f.readline()) > int(f.readline()):
             inversions += 1
     return left_inversions + right_inversions + inversions
+    f.close()
 
 if __name__ == '__main__':
   print(count_inversions([int(line.strip()) for line in open('intArray.txt', 'r')]))
-  f.close()
