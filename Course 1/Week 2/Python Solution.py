@@ -29,4 +29,4 @@ def Sort_Count(A):
     else:
         return A,0
 
-Sort_Count(a)
+print(len(Sort_Count(a)))
