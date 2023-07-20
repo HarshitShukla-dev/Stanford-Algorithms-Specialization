@@ -2,6 +2,7 @@
 #include <string>
 #include <cmath>
 
+using namespace std;
 
 string add(const string& num1, const string& num2) {
     int n1 = num1.length();
