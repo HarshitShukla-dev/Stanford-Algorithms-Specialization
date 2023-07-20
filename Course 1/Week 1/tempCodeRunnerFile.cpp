@@ -2,19 +2,6 @@
 #include <string>
 using namespace std;
 
-// Custom integer exponentiation function
-long long int_pow(long long base, int exp) {
-    long long result = 1;
-    while (exp > 0) {
-        if (exp & 1) {  // If exp is odd
-            result *= base;
-        }
-        base *= base;
-        exp >>= 1;
-    }
-    return result;
-}
-
 long long karatsubaMultiply(long long num1, long long num2) {
     // Convert numbers to strings to find their lengths
     int n1 = to_string(num1).length();
@@ -28,10 +15,10 @@ long long karatsubaMultiply(long long num1, long long num2) {
     // Split the numbers into two halves
     int half_n1 = n1 / 2;
     int half_n2 = n2 / 2;
-    long long a = num1 / int_pow(10, half_n1);
-    long long b = num1 % int_pow(10, half_n1);
-    long long c = num2 / int_pow(10, half_n2);
-    long long d = num2 % int_pow(10, half_n2);
+    long long a = num1 / pow(10, half_n1);
+    long long b = num1 % (long long)pow(10, half_n1);
+    long long c = num2 / pow(10, half_n2);
+    long long d = num2 % (long long)pow(10, half_n2);
 
     // Recursive calls for subproblems
     long long ac = karatsubaMultiply(a, c);
@@ -39,14 +26,12 @@ long long karatsubaMultiply(long long num1, long long num2) {
     long long ad_bc = karatsubaMultiply(a + b, c + d) - ac - bd;
 
     // Combine the results using the Karatsuba algorithm formula
-    return ac * int_pow(10, half_n1 * 2) + ad_bc * int_pow(10, half_n1) + bd;
+    return ac * (long long)pow(10, half_n1 * 2) + ad_bc * (long long)pow(10, half_n1) + bd;
 }
 
 int main() {
-    long long numA = 3141592653589793238LL;
-    numA = numA * 1000000000000000000LL + 4197169399375105820974944592LL;
-    long long numB = 2718281828459045235LL;
-    numB = numB * 1000000000000000000LL + 247093699959574966967627LL;
+    long long numA = 3141592653589793238462643383279502884197169399375105820974944592;
+    long long numB = 2718281828459045235360287471352662497757247093699959574966967627;
     cout << karatsubaMultiply(numA, numB) << endl;
     return 0;
 }
