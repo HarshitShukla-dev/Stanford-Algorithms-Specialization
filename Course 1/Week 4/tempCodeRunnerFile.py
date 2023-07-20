@@ -28,14 +28,9 @@ class KargerMinCutter:
         return len(list(self._graph.values())[0])
 
     def _pick_random_edge(self):
-        rand_edge = random.randint(0, self._total_edges - 1)
-        for vertex, vertex_edges in self._graph.items():
-            if len(vertex_edges) <= rand_edge:
-                rand_edge -= len(vertex_edges)
-            else:
-                from_vertex = vertex
-                to_vertex = vertex_edges[rand_edge]
-                return from_vertex, to_vertex
+        v1 = random.choice(list(self._graph.keys()))
+        v2 = random.choice(self._graph[v1])
+        return v1, v2
 
 if __name__ == "__main__":
     min_cut = 99999
