@@ -25,8 +25,8 @@ def Sort_Count(A):
         B,X = Sort_Count(A[:-splitposition])
         C,Y = Sort_Count(A[-splitposition:])
         D,Z = CountSplitInv(B,C)
-        return D,X+Y+Z
+        return len(D)+len(X+Y+Z)
     else:
-        return A,0
+        return len(A)
 
 print(Sort_Count(a))
