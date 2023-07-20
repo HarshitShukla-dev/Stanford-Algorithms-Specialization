@@ -45,6 +45,6 @@ if __name__ == "__main__":
         cut = min_cutter.find_min_cut()
         if cut < min_cut:
             min_cut = cut
-        print(min_cut)
+            print(min_cut)
 
 #Output:17
