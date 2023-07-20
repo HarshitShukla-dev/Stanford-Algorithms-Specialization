@@ -1,31 +1,32 @@
-import numpy as np
+with open('integerArray.txt') as f:
+    a = [int(x) for x in f]
 
-def read_integer_array(filename):
-  return np.array([int(i) for i in open(filename).readlines()])
-
-def count_inversions_merge_sort(array):
-  """Counts the number of inversions in an array using the merge sort algorithm."""
-  if len(array) <= 1:
-    return 0
-  else:
-    middle = len(array) // 2
-    left_inversions = count_inversions_merge_sort(array[:middle])
-    right_inversions = count_inversions_merge_sort(array[middle:])
-    inversions = 0
+def CountSplitInv(B,C):
     i = 0
-    j = middle
-    while i < middle and j < len(array):
-      if array[i] > array[j]:
-        inversions += middle - i
-      elif array[i] == array[j]:
-        inversions += 0
-      else:
-        inversions += 0
-      i += 1
-      j += 1
-    return left_inversions + right_inversions + inversions
+    j = 0
+    count = 0
+    D = []
+    while i<len(B) and j<len(C):
+        D.extend([min(B[i],C[j])])
+        if B[i] < C[j]:
+            i = i + 1
+        else:
+            count +=len(B[i:])
+            j+=1
+    D.extend(B[i:])
+    D.extend(C[j:])
+    Z = count
+    return D,Z
 
+def Sort_Count(A):
+    n = len(A)
+    if n > 1:
+        splitposition = n / 2
+        B,X = Sort_Count(A[:-splitposition])
+        C,Y = Sort_Count(A[-splitposition:])
+        D,Z = CountSplitInv(B,C)
+        return D,X+Y+Z
+    else:
+        return A,0
 
-ia = read_integer_array('integerArray.txt')
-num = count_inversions_merge_sort(ia)
-print(num)
+Sort_Count(a)
