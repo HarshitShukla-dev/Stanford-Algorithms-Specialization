@@ -32,8 +32,7 @@ f = open("integerArray.txt")
 lines = []
 
 for line in f:
-
-    values.append(int(line))
+    lines.append(int(line))
 
 (sorted_lines, inversions) = mergesort(lines)
 print(inversions)
