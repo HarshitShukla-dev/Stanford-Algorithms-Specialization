@@ -27,19 +27,6 @@ string multiply(const string& num1, const string& num2) {
     return "0";
 }
 
-// Custom integer exponentiation function
-string int_pow(const string& base, int exp) {
-    string result = "1";
-    while (exp > 0) {
-        if (exp & 1) {  // If exp is odd
-            result = multiply(result, base);
-        }
-        exp >>= 1;
-        base = multiply(base, base);
-    }
-    return result;
-}
-
 string karatsubaMultiply(const string& num1, const string& num2) {
     int n1 = num1.length();
     int n2 = num2.length();
