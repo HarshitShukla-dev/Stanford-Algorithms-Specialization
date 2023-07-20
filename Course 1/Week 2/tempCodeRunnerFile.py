@@ -21,12 +21,12 @@ def CountSplitInv(B,C):
 def Sort_Count(A):
     n = len(A)
     if n > 1:
-        splitposition = n / 2
+        splitposition = int(n / 2)
         B,X = Sort_Count(A[:-splitposition])
         C,Y = Sort_Count(A[-splitposition:])
         D,Z = CountSplitInv(B,C)
-        return D,X+Y+Z
+        return len(D)+len(X+Y+Z)
     else:
-        return A,0
+        return len(A)
 
-Sort_Count(a)
+print(Sort_Count(a))
