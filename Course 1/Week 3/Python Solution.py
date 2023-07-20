@@ -1,81 +1,82 @@
-class QuickSorter:
-    """
-    A quicksort implementation.
+import random
 
-    Attributes:
-        comparisons (int): The number of comparisons made by the algorithm.
-        array (list): The array to be sorted.
+comparisons = 0
 
-    Methods:
-        read_input(input_file=None): Reads the input from a file or the console.
-        sort(): Sorts the array.
-        partition(start, end): Partitions the array around the pivot element.
-    """
-
-    def __init__(self, input_file=None):
-        self.comparisons = 0
-        self.array = []
-        self.read_input(input_file)
-
-    @property
-    def comparisons(self):
-        """The number of comparisons made by the algorithm."""
-        return self._comparisons
-
-    @property
-    def array(self):
-        """The array to be sorted."""
-        return self._array
-
-    @array.setter
-    def array(self, arr):
-        """Sets the array to be sorted."""
-        self._array = arr
-
-    def read_input(self, input_file=None):
-        """Reads the input from a file or the console."""
-        if input_file is None:
-            self.array = [int(elem) for elem in input().split()]
-            return
+def read_input(input_file=None):
+    if input_file is None:
+        return [int(elem) for elem in input().split()]
+    else:
         with open(input_file) as numbers:
-            for number in numbers:
-                self.array.append(int(number))
+            return [int(number) for number in numbers]
 
-    def sort(self):
-        """Sorts the array."""
-        if len(self.array) <= 1:
-            return
-        self._qsort(0, len(self.array) - 1)
+def quick_sort(arr):
+    global comparisons
+    if len(arr) <= 1:
+        return arr
 
-    def _qsort(self, start, end):
-        """Recursively sorts the array."""
-        if start >= end:
-            return
-        pivot = self.partition(start, end)
-        self._qsort(start, pivot - 1)
-        self._qsort(pivot + 1, end)
+    pivot_index = random.randint(0, len(arr) - 1)
+    pivot = arr[pivot_index]
+    left = [x for i, x in enumerate(arr) if x <= pivot and i != pivot_index]
+    right = [x for i, x in enumerate(arr) if x > pivot and i != pivot_index]
 
-    def partition(self, start, end):
-        """Partitions the array around the pivot element."""
-        self.comparisons += end - start
-        pivot = start
-        for i in range(start + 1, end + 1):
-            if self.array[i] < self.array[start]:
-                pivot += 1
-                self.array[i], self.array[pivot] = self.array[pivot], self.array[i]
-        self.array[start], self.array[pivot] = self.array[pivot], self.array[start]
-        return pivot
+    comparisons += len(arr) - 1
+    return quick_sort(left) + [pivot] + quick_sort(right)
 
+def quick_sort_first_pivot(arr):
+    global comparisons
+    if len(arr) <= 1:
+        return arr
 
-def main():
-    """Sorts the input array and prints the number of comparisons made."""
-    sorters = (QuickSorter('intArray.txt'),
-               QuickSorter('intArray.txt'),
-               QuickSorter('intArray.txt'))
-    for sorter in sorters:
-        sorter.sort()
-    print(sorters[0].comparisons, sorters[1].comparisons, sorters[2].comparisons)
+    pivot = arr[0]
+    left = [x for x in arr[1:] if x <= pivot]
+    right = [x for x in arr[1:] if x > pivot]
 
+    comparisons += len(arr) - 1
+    return quick_sort_first_pivot(left) + [pivot] + quick_sort_first_pivot(right)
+
+def quick_sort_last_pivot(arr):
+    global comparisons
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[-1]
+    left = [x for x in arr[:-1] if x <= pivot]
+    right = [x for x in arr[:-1] if x > pivot]
+
+    comparisons += len(arr) - 1
+    return quick_sort_last_pivot(left) + [pivot] + quick_sort_last_pivot(right)
+
+def quick_sort_median_pivot(arr):
+    global comparisons
+    if len(arr) <= 1:
+        return arr
+
+    median_index = len(arr) // 2
+    pivot_candidates = [arr[0], arr[-1], arr[median_index]]
+    pivot_candidates.sort()
+    pivot = pivot_candidates[1]
+
+    left = [x for i, x in enumerate(arr) if x < pivot and i != median_index]
+    right = [x for i, x in enumerate(arr) if x > pivot and i != median_index]
+
+    comparisons += len(arr) - 1
+    return quick_sort_median_pivot(left) + [pivot] + quick_sort_median_pivot(right)
 
 if __name__ == '__main__':
-    main()
+    input_array = read_input('intArray.txt')
+    comparisons = 0
+
+    sorted_array = quick_sort(input_array.copy())
+    print(f"Random Pivot Comparisons: {comparisons}")
+
+    comparisons = 0
+    sorted_array_first_pivot = quick_sort_first_pivot(input_array.copy())
+    print(f"First Element Pivot Comparisons: {comparisons}")
+
+    comparisons = 0
+    sorted_array_last_pivot = quick_sort_last_pivot(input_array.copy())
+    print(f"Last Element Pivot Comparisons: {comparisons}")
+
+    comparisons = 0
+    sorted_array_median_pivot = quick_sort_median_pivot(input_array.copy())
+    print(f"Median Element Pivot Comparisons: {comparisons}")
