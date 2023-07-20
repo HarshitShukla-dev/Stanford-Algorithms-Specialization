@@ -1,13 +1,13 @@
 ## Problem 1: Find the second-largest number in an unsorted array of n distinct numbers, where n is a power of 2.
 
-````python
+```python
 def find_second_largest(array):
   """Finds the second-largest number in an unsorted array of n distinct numbers, where n is a power of 2."""
   largest = max(array)
   array.remove(largest)
   second_largest = max(array)
   return second_largest
-````
+```
 
 ## Problem 2: Find the maximum element in a unimodal array in O(log n) time.
 
@@ -19,6 +19,7 @@ def find_maximum_in_unimodal_array(array):
     return find_maximum_in_unimodal_array(array[:middle])
   else:
     return find_maximum_in_unimodal_array(array[middle:])
+```
 
 ## Problem 3: Find an index i such that A[i] = i in a sorted array A of n distinct integers.
 
@@ -32,6 +33,7 @@ def find_index_equal_to_value(array):
     else:
       j += 1
   return -1
+```
 
 ## Problem 4: Find a local minimum in an n by n grid of distinct numbers with only O(n) comparisons between pairs of numbers.
 
@@ -43,4 +45,4 @@ def find_local_minimum(grid):
     if grid[i] < min_value:
       min_value = grid[i]
   return min_value
-````
+```
