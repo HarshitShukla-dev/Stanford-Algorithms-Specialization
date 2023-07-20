@@ -23,7 +23,7 @@ def Sort_Count(A):
     if n > 1:
         splitposition = n / 2
         B,X = Sort_Count(A[:-int(splitposition)])
-        C,Y = Sort_Count(A[-splitposition:])
+        C,Y = Sort_Count(A[-int(splitposition):])
         D,Z = CountSplitInv(B,C)
         return D,X+Y+Z
     else:
