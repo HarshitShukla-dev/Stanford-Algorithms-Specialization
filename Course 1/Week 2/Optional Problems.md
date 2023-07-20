@@ -6,7 +6,7 @@ def find_second_largest(array):
   largest = max(array)
   array.remove(largest)
   second_largest = max(array)
-  return second_largest
+  return second_largest````
 
 ## Problem 2: Find the maximum element in a unimodal array in O(log n) time.
 
