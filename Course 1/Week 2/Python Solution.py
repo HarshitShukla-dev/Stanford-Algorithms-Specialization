@@ -19,6 +19,8 @@ def count_inversions(array):
       for j in range(len(array) // 2, len(array)):
         if array[i] > array[j]:
           inversions += 1
+          print("j, ",j)
+      print("i, ",i)
     return left_inversions + right_inversions + inversions
 
 
