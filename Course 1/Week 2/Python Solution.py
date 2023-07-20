@@ -1,23 +1,32 @@
-import numpy as np
+with open('integerArray.txt') as f:
+    a = [int(x) for x in f]
 
-def read_integer_array(filename):
-  return np.array([int(i) for i in open(filename).readlines()])
+def CountSplitInv(B,C):
+    i = 0
+    j = 0
+    count = 0
+    D = []
+    while i<len(B) and j<len(C):
+        D.extend([min(B[i],C[j])])
+        if B[i] < C[j]:
+            i = i + 1
+        else:
+            count +=len(B[i:])
+            j+=1
+    D.extend(B[i:])
+    D.extend(C[j:])
+    Z = count
+    return D,Z
 
-def count_inversions(array):
-  """Counts the number of inversions in an array."""
-  if len(array) <= 1:
-    return 0
-  else:
-    left_inversions = count_inversions(array[:len(array) // 2])
-    right_inversions = count_inversions(array[len(array) // 2:])
-    inversions = 0
-    for i in range(len(array) // 2):
-      for j in range(len(array) // 2, len(array)):
-        if array[i] > array[j]:
-          inversions += 1
-    return left_inversions + right_inversions + inversions
+def Sort_Count(A):
+    n = len(A)
+    if n > 1:
+        splitposition = n / 2
+        B,X = Sort_Count(A[:-splitposition])
+        C,Y = Sort_Count(A[-splitposition:])
+        D,Z = CountSplitInv(B,C)
+        return D,X+Y+Z
+    else:
+        return A,0
 
-
-ia = read_integer_array('integerArray.txt')
-num = count_inversions(ia)
-print(num)
+Sort_Count(a)
