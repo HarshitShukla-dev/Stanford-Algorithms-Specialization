@@ -2,7 +2,28 @@
 #include <string>
 using namespace std;
 
-// Custom multiplication function for large numbers represented as strings
+string add(const string& num1, const string& num2) {
+    int n1 = num1.length();
+    int n2 = num2.length();
+    int carry = 0;
+    string result;
+
+    // Perform addition digit by digit
+    for (int i = n1 - 1, j = n2 - 1; i >= 0 || j >= 0 || carry > 0; --i, --j) {
+        int sum = carry;
+        if (i >= 0) {
+            sum += (num1[i] - '0');
+        }
+        if (j >= 0) {
+            sum += (num2[j] - '0');
+        }
+        carry = sum / 10;
+        result = to_string(sum % 10) + result;
+    }
+
+    return result;
+}
+
 string multiply(const string& num1, const string& num2) {
     int n1 = num1.length();
     int n2 = num2.length();
@@ -53,13 +74,11 @@ string karatsubaMultiply(const string& num1, const string& num2) {
     // Recursive calls for subproblems
     string ac = karatsubaMultiply(a, c);
     string bd = karatsubaMultiply(b, d);
-    string ad_bc = karatsubaMultiply(a, d) + karatsubaMultiply(b, c);
+    string ad_bc = karatsubaMultiply(add(a, b), add(c, d));
 
     // Combine the results using the Karatsuba algorithm formula
-    string result = multiply(ac + string(2 * half_len, '0'), "1") +
-                    multiply(ad_bc + string(half_len, '0'), "1") +
-                    bd;
-    
+    string result = add(add(ac + string(2 * half_len, '0'), ad_bc + string(half_len, '0')), bd);
+
     // Remove leading zeros
     size_t pos = result.find_first_not_of('0');
     if (pos != string::npos) {
