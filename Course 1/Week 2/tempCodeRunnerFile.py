@@ -1,3 +1,14 @@
+"""
+Inversions: num of (i, j) in A where i<j and A[i]>A[j]
+"""
+
+ia = []
+f = open('intArray.txt', 'r')
+ls = f.readlines()
+f.close()
+ia = [int(i) for i in ls]
+print(ls)
+
 def count_inversions(array):
   """Counts the number of inversions in an array."""
   if len(array) <= 1:
@@ -6,13 +17,13 @@ def count_inversions(array):
     left_inversions = count_inversions(array[:len(array) // 2])
     right_inversions = count_inversions(array[len(array) // 2:])
     inversions = 0
-    with open('intArray.txt', 'r') as f:
+    with open('integerarray.txt', 'r') as f:
       for i in range(len(array) // 2):
         for j in range(len(array) // 2, len(array)):
           if int(f.readline()) > int(f.readline()):
             inversions += 1
     return left_inversions + right_inversions + inversions
-    f.close()
 
-if __name__ == '__main__':
-  print(count_inversions([int(line.strip()) for line in open('intArray.txt', 'r')]))
+
+num = count_inversions(ia)
+print(num)

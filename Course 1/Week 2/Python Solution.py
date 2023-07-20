@@ -7,7 +7,7 @@ f = open('intArray.txt', 'r')
 ls = f.readlines()
 f.close()
 ia = [int(i) for i in ls]
-
+print(ls)
 
 def count_inversions(array):
   """Counts the number of inversions in an array."""
