@@ -1,11 +1,7 @@
-"""
-Inversions: num of (i, j) in A where i<j and A[i]>A[j]
-"""
+import numpy as np
 
 def read_integer_array(filename):
-  with open(filename, 'r') as f:
-    ls = f.readlines()
-  return [int(i) for i in ls]
+  return np.array([int(i) for i in open(filename).readlines()])
 
 def count_inversions(array):
   """Counts the number of inversions in an array."""
@@ -19,8 +15,6 @@ def count_inversions(array):
       for j in range(len(array) // 2, len(array)):
         if array[i] > array[j]:
           inversions += 1
-          print("j, ",j)
-      print("i, ",i)
     return left_inversions + right_inversions + inversions
 
 
