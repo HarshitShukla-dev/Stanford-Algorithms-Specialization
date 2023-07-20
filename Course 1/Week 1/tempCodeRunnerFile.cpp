@@ -3,6 +3,19 @@
 #include <string>
 using namespace std;
 
+// Custom integer exponentiation function
+long long int_pow(long long base, int exp) {
+    long long result = 1;
+    while (exp > 0) {
+        if (exp & 1) {  // If exp is odd
+            result *= base;
+        }
+        base *= base;
+        exp >>= 1;
+    }
+    return result;
+}
+
 long long karatsubaMultiply(long long num1, long long num2) {
     // Convert numbers to strings to find their lengths
     int n1 = to_string(num1).length();
@@ -16,9 +29,9 @@ long long karatsubaMultiply(long long num1, long long num2) {
     // Split the numbers into two halves
     int half_n1 = n1 / 2;
     int half_n2 = n2 / 2;
-    long long a = num1 / pow(10LL, half_n1);  // Use LL suffix here
+    long long a = num1 / int_pow(10LL, half_n1);  // Use LL suffix here
     long long b = num1 % int_pow(10LL, half_n1);  // Use LL suffix here
-    long long c = num2 / pow(10LL, half_n2);  // Use LL suffix here
+    long long c = num2 / int_pow(10LL, half_n2);  // Use LL suffix here
     long long d = num2 % int_pow(10LL, half_n2);  // Use LL suffix here
 
     // Recursive calls for subproblems
@@ -28,19 +41,6 @@ long long karatsubaMultiply(long long num1, long long num2) {
 
     // Combine the results using the Karatsuba algorithm formula
     return ac * int_pow(10LL, half_n1 * 2) + ad_bc * int_pow(10LL, half_n1) + bd;  // Use LL suffix here
-}
-
-// Custom integer exponentiation function
-long long int_pow(long long base, int exp) {
-    long long result = 1;
-    while (exp > 0) {
-        if (exp & 1) {  // If exp is odd
-            result *= base;
-        }
-        base *= base;
-        exp >>= 1;
-    }
-    return result;
 }
 
 int main() {
