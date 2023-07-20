@@ -1,5 +1,4 @@
-#include <iostream>
-#include <string>
+#include <bits/stdc++.h>
 using namespace std;
 
 string add(const string& num1, const string& num2) {
@@ -22,30 +21,6 @@ string add(const string& num1, const string& num2) {
     }
 
     return result;
-}
-
-string multiply(const string& num1, const string& num2) {
-    int n1 = num1.length();
-    int n2 = num2.length();
-    string result(n1 + n2, '0');
-
-    for (int i = n1 - 1; i >= 0; --i) {
-        int carry = 0;
-        for (int j = n2 - 1; j >= 0; --j) {
-            int sum = (num1[i] - '0') * (num2[j] - '0') + (result[i + j + 1] - '0') + carry;
-            result[i + j + 1] = (sum % 10) + '0';
-            carry = sum / 10;
-        }
-        result[i] += carry;
-    }
-
-    // Remove leading zeros
-    size_t pos = result.find_first_not_of('0');
-    if (pos != string::npos) {
-        return result.substr(pos);
-    }
-
-    return "0";
 }
 
 string karatsubaMultiply(const string& num1, const string& num2) {
