@@ -76,9 +76,9 @@ class QuickSorterMedianElementPivot(QuickSorter):
             self._array[start], self._array[end] = self._array[end], self._array[start]
 
 if __name__ == '__main__':
-    sorters = (QuickSorterFirstElementPivot('assignment_2.txt'),
-               QuickSorterLastElementPivot('assignment_2.txt'),
-               QuickSorterMedianElementPivot('assignment_2.txt'))
+    sorters = (QuickSorterFirstElementPivot('intArray.txt'),
+               QuickSorterLastElementPivot('intArray.txt'),
+               QuickSorterMedianElementPivot('intArray.txt'))
     for sorter in sorters:
         sorter.sort()
     print(sorters[0].comparisons, sorters[1].comparisons, sorters[2].comparisons)
