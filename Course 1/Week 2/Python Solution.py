@@ -9,32 +9,21 @@ f.close()
 ia = [int(i) for i in ls]
 
 
-def inversion(a):
-    n = len(a)
-    if n == 1:
-        return (a, 0)
-    else:
-        b1, nleft = inversion(a[:n//2])
-        b2, nright = inversion(a[n//2:])
-        cross = 0
-        b = []
-        i, j = 0, 0
-        while i < len(b1) or j < len(b2):
-            if i == len(b1):
-                b += b2[j:]
-                j = len(b2)
-            elif j == len(b2):
-                b += b1[i:]
-                i = len(b1)
-            elif b1[i] < b2[j]:
-                b += [b1[i]]
-                i += 1
-            else:
-                b += [b2[j]]
-                j += 1
-                cross += len(b1)-i
-        return (b, nleft+nright+cross)
+def count_inversions(array):
+  """Counts the number of inversions in an array."""
+  if len(array) <= 1:
+    return 0
+  else:
+    left_inversions = count_inversions(array[:len(array) // 2])
+    right_inversions = count_inversions(array[len(array) // 2:])
+    inversions = 0
+    with open('integerarray.txt', 'r') as f:
+      for i in range(len(array) // 2):
+        for j in range(len(array) // 2, len(array)):
+          if int(f.readline()) > int(f.readline()):
+            inversions += 1
+    return left_inversions + right_inversions + inversions
 
 
-_, num = inversion(ia)
+_, num = count_inversions(ia)
 print(num)
