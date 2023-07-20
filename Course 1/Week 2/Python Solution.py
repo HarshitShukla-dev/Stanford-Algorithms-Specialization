@@ -1,32 +1,35 @@
-with open('integerArray.txt') as f:
-    a = [int(x) for x in f]
-
-def CountSplitInv(B,C):
-    i = 0
-    j = 0
-    count = 0
-    D = []
-    while i<len(B) and j<len(C):
-        D.extend([min(B[i],C[j])])
-        if B[i] < C[j]:
-            i = i + 1
+def merge(left, right):
+    inversions = 0
+    result = []
+    i, j = 0 , 0
+    left_len = len(left)
+    right_len = len(right)
+    while i < left_len and j < right_len: # iterate through both arrays and arrange the elements in sorted order
+        if left[i] <= right [j]:
+            result.append(left[i])
+            i+=1
         else:
-            count +=len(B[i:])
+            inversions += (left_len - i)
+            result.append(right[j])
             j+=1
-    D.extend(B[i:])
-    D.extend(C[j:])
-    Z = count
-    return D,Z
 
-def Sort_Count(A):
-    n = len(A)
-    if n > 1:
-        splitposition = (n / 2)
-        B,X = Sort_Count(A[:-splitposition])
-        C,Y = Sort_Count(A[-splitposition:])
-        D,Z = CountSplitInv(B,C)
-        return len(D)+len(X+Y+Z)
-    else:
-        return len(A)
+    result += left[i:]
+    result += right[j:]
+    return result, inversions
 
-print(Sort_Count(a))
+#The mergesort method to split the arrays into smaller subarrays
+def mergesort(lst):
+    if len(lst) <= 1:
+        return lst, 0
+    middle = int(len(lst) / 2)
+    (left,x) = mergesort(lst[:middle])
+    (right,y) = mergesort(lst[middle:])
+    (combined, z) = merge(left, right)
+    return combined, x+y+z
+
+with open('integerArray.txt') as fp:
+    lines = fp.read().split("\n")
+
+(sorted_lines, inversions) = mergesort(lines)
+print(inversions)
+
