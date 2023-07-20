@@ -27,9 +27,13 @@ def mergesort(lst):
     (combined, z) = merge(left, right)
     return combined, x+y+z
 
-with open('integerArray.txt') as fp:
-    lines = fp.read().split("\n")
+f = open("integerArray.txt")
+
+lines = []
+
+for line in f:
+
+    values.append(int(line))
 
 (sorted_lines, inversions) = mergesort(lines)
 print(inversions)
-
