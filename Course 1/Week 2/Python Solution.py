@@ -25,5 +25,5 @@ def count_inversions(array):
     return left_inversions + right_inversions + inversions
 
 
-_, num = count_inversions(ia)
+num = count_inversions(ia)
 print(num)
