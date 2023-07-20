@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
+
 using namespace std;
 
 string add(const string& num1, const string& num2) {
@@ -21,6 +23,43 @@ string add(const string& num1, const string& num2) {
     }
 
     return result;
+}
+
+string subtract(const string& num1, const string& num2) {
+    int n1 = num1.length();
+    int n2 = num2.length();
+    string result;
+
+    int i = n1 - 1, j = n2 - 1;
+    int borrow = 0;
+
+    // Perform subtraction digit by digit
+    while (i >= 0 || j >= 0) {
+        int digit1 = (i >= 0) ? (num1[i] - '0') : 0;
+        int digit2 = (j >= 0) ? (num2[j] - '0') : 0;
+
+        int diff = digit1 - digit2 - borrow;
+
+        if (diff < 0) {
+            diff += 10;
+            borrow = 1;
+        } else {
+            borrow = 0;
+        }
+
+        result = to_string(diff) + result;
+
+        i--;
+        j--;
+    }
+
+    // Remove leading zeros
+    size_t pos = result.find_first_not_of('0');
+    if (pos != string::npos) {
+        return result.substr(pos);
+    }
+
+    return "0";
 }
 
 string karatsubaMultiply(const string& num1, const string& num2) {
@@ -49,7 +88,13 @@ string karatsubaMultiply(const string& num1, const string& num2) {
     // Recursive calls for subproblems
     string ac = karatsubaMultiply(a, c);
     string bd = karatsubaMultiply(b, d);
-    string ad_bc = karatsubaMultiply(add(a, b), add(c, d));
+
+    // Calculate (a + b) * (c + d)
+    string sum_ab = add(a, b);
+    string sum_cd = add(c, d);
+    string ad_bc = karatsubaMultiply(sum_ab, sum_cd);
+    ad_bc = subtract(ad_bc, ac);
+    ad_bc = subtract(ad_bc, bd);
 
     // Combine the results using the Karatsuba algorithm formula
     string result = add(add(ac + string(2 * half_len, '0'), ad_bc + string(half_len, '0')), bd);
