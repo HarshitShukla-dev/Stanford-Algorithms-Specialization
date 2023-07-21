@@ -63,3 +63,5 @@ if __name__ == '__main__':
     vertices_of_interest = [7, 37, 59, 82, 99, 115, 133, 165, 188, 197]
     output = [shortest_distances[vertex] for vertex in vertices_of_interest]
     print(','.join(map(str, output)))
+
+# Output: 2599,2610,2947,2052,2367,2399,2029,2442,2505,3068
