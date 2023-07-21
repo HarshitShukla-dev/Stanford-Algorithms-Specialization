@@ -1,20 +1,21 @@
 from ast import literal_eval
 
-
 class DijkstraPathFinder:
     """
-    DijkstraPathFinder class finds the shortest paths in a graph using Dijkstra's algorithm.
-
-    Args:
-        input_file (str): The name of the input file containing the graph information.
+    DijkstraPathFinder class computes the shortest paths in a graph using Dijkstra's algorithm.
 
     Attributes:
-        graph (dict): A dictionary representing the graph with vertices as keys and their adjacent edges as values.
-        source_vertex (int): The source vertex used for computing shortest paths.
-
+        graph (dict): A dictionary representing the graph with vertex as keys and lists of edges as values.
+        source_vertex (int): The source vertex for computing the shortest paths.
     """
 
     def __init__(self, input_file):
+        """
+        Initialize the DijkstraPathFinder with a graph from the input file.
+
+        Args:
+            input_file (str): The path to the input file containing the graph information.
+        """
         self.graph = {}
         with open(input_file) as file:
             for line in file:
@@ -24,51 +25,41 @@ class DijkstraPathFinder:
 
     def compute_shortest_paths(self, source=None):
         """
-        Compute the shortest paths from the given source vertex to all other vertices in the graph.
+        Compute the shortest paths from the source vertex to all other vertices using Dijkstra's algorithm.
 
         Args:
-            source (int, optional): The source vertex for computing shortest paths. If not provided,
-            the default source vertex set during object initialization will be used.
+            source (int, optional): The source vertex. If not provided, the default source vertex will be used.
 
         Returns:
-            dict: A dictionary containing vertex as keys and the corresponding shortest distance and path as values.
-
+            dict: A dictionary containing the shortest distances from the source vertex to all other vertices.
         """
         if source is None:
             source = self.source_vertex
 
-        # Initialize shortest_paths dictionary with initial distances as infinite and empty paths.
-        shortest_paths = {vertex: (float('inf'), []) for vertex in self.graph.keys()}
-        shortest_paths[source] = (0, [])
+        INF = float('inf')
+        shortest_distances = {vertex: INF for vertex in self.graph.keys()}
+        shortest_distances[source] = 0
 
         visited = set()
-        while set(self.graph.keys()) - visited:
-            source_vertex, min_edge = None, ()
-            for vertex in visited:
-                for edge_vertex, edge_distance in self.graph[vertex]:
-                    if edge_vertex in visited:
-                        continue
-                    new_distance = shortest_paths[vertex][0] + edge_distance
-                    if not min_edge or new_distance < min_edge[1]:
-                        min_edge = (edge_vertex, new_distance)
-                        source_vertex = vertex
-            if source_vertex is None:
-                break  # All reachable vertices have been visited
-            shortest_paths[min_edge[0]] = (min_edge[1], shortest_paths[source_vertex][1] + [min_edge[0]])
-            visited.add(min_edge[0])
 
-        return shortest_paths
+        while len(visited) < len(self.graph):
+            min_distance_vertex = min((v for v in self.graph.keys() if v not in visited), key=shortest_distances.get)
+            visited.add(min_distance_vertex)
 
+            for neighbor, edge_weight in self.graph[min_distance_vertex]:
+                if neighbor not in visited:
+                    new_distance = shortest_distances[min_distance_vertex] + edge_weight
+                    if new_distance < shortest_distances[neighbor]:
+                        shortest_distances[neighbor] = new_distance
 
-def format_distance(distance):
-    return distance if distance < float('inf') else "N/A"
+        return shortest_distances
 
 
 if __name__ == '__main__':
     path_finder = DijkstraPathFinder('intArray.txt')
     shortest_distances = path_finder.compute_shortest_paths()
-    vertices_to_print = [7, 37, 59, 82, 99, 115, 133, 165, 188, 197]
 
-    # Print the formatted shortest distances for the specified vertices separated by commas
-    output = ','.join(format_distance(shortest_distances[vertex][0]) for vertex in vertices_to_print)
-    print(output)
+    # Print the shortest distances for the specified vertices
+    vertices_of_interest = [7, 37, 59, 82, 99, 115, 133, 165, 188, 197]
+    output = [shortest_distances[vertex] for vertex in vertices_of_interest]
+    print(','.join(map(str, output)))
