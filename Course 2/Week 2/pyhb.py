@@ -60,11 +60,15 @@ class DijkstraPathFinder:
         return shortest_paths
 
 
+def format_distance(distance):
+    return distance if distance < float('inf') else "N/A"
+
+
 if __name__ == '__main__':
     path_finder = DijkstraPathFinder('intArray.txt')
     shortest_distances = path_finder.compute_shortest_paths()
     vertices_to_print = [7, 37, 59, 82, 99, 115, 133, 165, 188, 197]
 
-    # Print the shortest distances for the specified vertices separated by commas
-    output = ','.join(str(shortest_distances[vertex][0]) for vertex in vertices_to_print)
+    # Print the formatted shortest distances for the specified vertices separated by commas
+    output = ','.join(format_distance(shortest_distances[vertex][0]) for vertex in vertices_to_print)
     print(output)
