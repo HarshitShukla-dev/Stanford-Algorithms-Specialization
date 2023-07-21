@@ -34,7 +34,7 @@ class DijkstraPathFinder:
         return shortest_paths
 
 if __name__ == '__main__':
-    path_finder = DijkstraPathFinder('assignment_5.txt')
+    path_finder = DijkstraPathFinder('intArray.txt')
     paths = path_finder.compute_shortest_paths()
     actual = {vertex: distance[0] for (vertex, distance) in paths.items()}
     print(actual[7])
