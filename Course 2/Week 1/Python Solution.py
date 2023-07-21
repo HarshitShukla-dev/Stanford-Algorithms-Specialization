@@ -67,4 +67,4 @@ if __name__ == "__main__":
     expected_sccs = [434821, 968, 459, 313, 211]
     print(scc_finder.scc_list[:5])
 
-#Output: [434821, 968, 459, 313, 211]
+#Output: [434821, 968, 459, 313, 211] 
