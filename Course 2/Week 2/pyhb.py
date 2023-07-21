@@ -39,15 +39,4 @@ if __name__ == '__main__':
     actual = {vertex: distance[0] for (vertex, distance) in paths.items()}
     print(actual[7], actual[37], actual[59], actual[82], actual[99], actual[115], actual[133], actual[165], actual[188], actual[197], sep=',')
 
-
-'''Output 2599
-2610
-2947
-2052
-2367
-2399
-2029
-2442
-2505
-30688
-'''
+# output: 2599,2610,2947,2052,2367,2399,2029,2442,2505,3068
